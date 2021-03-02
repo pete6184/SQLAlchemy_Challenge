@@ -46,6 +46,7 @@ def precipitation():
 
 
 
+
 @app.route("/api/v1.0/stations")
 def stations():
     # Create our session (link) from Python to the DB
@@ -67,6 +68,8 @@ def tobs():
     # Return a JSON list of temperature observations (TOBS) for the previous year.
     
 
+
+
 @app.route("/api/v1.0/<start>")
 def start_date():
     # Create our session (link) from Python to the DB
@@ -81,6 +84,8 @@ def start_date():
 
     # When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive.
     
+
+
 
 @app.route("/api/v1.0/<start>/<end>")
 def start_to_end_date():
