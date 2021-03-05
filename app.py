@@ -150,5 +150,5 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-    # There was a hint statinf that we will need to join station and measurement tables for some of the queries. Which ones?
+    # There was a hint stating that we will need to join station and measurement tables for some of the queries. Which ones?
     # Fomatting for the welcome route - start and start/end routes
