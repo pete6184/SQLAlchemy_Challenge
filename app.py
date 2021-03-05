@@ -31,7 +31,7 @@ def welcome():
         f"<a href='/api/v1.0/precipitation'>Precipitation</a><br/>"
         f"<a href='/api/v1.0/stations'>Stations</a><br/>"
         f"<a href='/api/v1.0/tobs'>TOBS</a><br/>"
-        f"<a href='/api/v1.0/(start:yyyy-mm-dd)'StartDate</a><br/>"
+        f"<a href='/api/v1.0/(start:yyyy-mm-dd)'>StartDate</a><br/>"
         f"<a href='/api/v1.0/(start:yyyy-mm-dd)/(end:yyyy-mm-dd)'>StartToEndDate</a>"
     )
 
@@ -40,7 +40,7 @@ def precipitation():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    results = session.query(Measurement.date, Measurement.prcp).order_by(Measurement.date).all()
+    results = session.query(Measurement.station, Measurement.date, Measurement.prcp).order_by(Measurement.date).all()
 
     session.close()
     
@@ -48,8 +48,9 @@ def precipitation():
     precip_list = []
     for item in results:
         precip_dict = {}
-        precip_dict["date"] = item[0]
-        precip_dict["prcp"] = item[1]
+        precip_dict["station"] = item[0]
+        precip_dict["date"] = item[1]
+        precip_dict["prcp"] = item[2]
         precip_list.append(precip_dict)
 
     return jsonify(precip_list)
@@ -80,8 +81,8 @@ def tobs():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    results = session.query(Measurement.date, Measurement.tobs)\
-        .filter(Station.station == "USC00519281")\
+    results = session.query(Measurement.station, Measurement.date, Measurement.tobs)\
+        .filter(Measurement.station == 'USC00519281')\
         .filter(Measurement.date >= '2016-08-24')\
         .order_by(Measurement.date).all()
 
@@ -91,8 +92,9 @@ def tobs():
     tobs_list = []
     for item in results:
         tobs_dict = {}
-        tobs_dict["date"] = item[0]
-        tobs_dict["tobs"] = item[1]
+        tobs_dict["station"] = item[0]
+        tobs_dict["date"] = item[1]
+        tobs_dict["tobs"] = item[2]
         tobs_list.append(tobs_dict)
 
     return jsonify(tobs_list)
@@ -103,14 +105,16 @@ def start_date(start):
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
+    results = session.query(Measurement.date, Measurement.station, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
         .filter(Measurement.date >= start).group_by(Measurement.date).all()
     
     session.close()
 
     tobs_start_list = []
-    for min, avg, max in results:
+    for date, station, min, avg, max in results:
         tobs_start_dict = {}
+        tobs_start_dict["date"] = date
+        tobs_start_dict["station"] = station
         tobs_start_dict["min"] = min
         tobs_start_dict["avg"] = avg
         tobs_start_dict["max"] = max
@@ -124,14 +128,16 @@ def start_to_end_date(start, end):
 # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
-        .filter(Measurement.date >= start).group_by(Measurement.date).all()
+    results = session.query(Measurement.date, Measurement.station, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
+        .filter(Measurement.date >= start).filter(Measurement.date <= end).all()
     
     session.close()
 
     tobs_start_end_list = []
-    for min, avg, max in results:
+    for date, station, min, avg, max in results:
         tobs_start_end_dict = {}
+        tobs_start_end_dict["date"] = date
+        tobs_start_end_dict["station"] = station
         tobs_start_end_dict["min"] = min
         tobs_start_end_dict["avg"] = avg
         tobs_start_end_dict["max"] = max
