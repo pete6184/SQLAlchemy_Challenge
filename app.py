@@ -22,7 +22,7 @@ Station = Base.classes.station
 # Flask setup
 app = Flask(__name__)
 
-# Setup Falsk Routes
+# Setup Flask Routes
 @app.route("/")
 def welcome():
     """List all available api routes."""
@@ -99,22 +99,22 @@ def tobs():
 
     return jsonify(tobs_list)
 
+###### Where is the start date coming from? Should there be an input somewhere?
 
 @app.route("/api/v1.0/<start>")
 def start_date(start):
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    results = session.query(Measurement.date, Measurement.station, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
-        .filter(Measurement.date >= start).group_by(Measurement.date).all()
+    results = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
+        .filter(Measurement.date >= start).group_by(Measurement.date).order_by(Measurement.date).all()
     
     session.close()
 
     tobs_start_list = []
-    for date, station, min, avg, max in results:
+    for date, min, avg, max in results:
         tobs_start_dict = {}
         tobs_start_dict["date"] = date
-        tobs_start_dict["station"] = station
         tobs_start_dict["min"] = min
         tobs_start_dict["avg"] = avg
         tobs_start_dict["max"] = max
@@ -122,22 +122,23 @@ def start_date(start):
 
     return jsonify(tobs_start_list)
 
+#### Same question here with where the dates are coming from. Also, there is no data being displayed on the website. It went away when I added the <= end (date) stipulation.
+
 
 @app.route("/api/v1.0/<start>/<end>")
 def start_to_end_date(start, end):
 # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    results = session.query(Measurement.date, Measurement.station, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
+    results = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
         .filter(Measurement.date >= start).filter(Measurement.date <= end).all()
     
     session.close()
 
     tobs_start_end_list = []
-    for date, station, min, avg, max in results:
+    for date, min, avg, max in results:
         tobs_start_end_dict = {}
         tobs_start_end_dict["date"] = date
-        tobs_start_end_dict["station"] = station
         tobs_start_end_dict["min"] = min
         tobs_start_end_dict["avg"] = avg
         tobs_start_end_dict["max"] = max
@@ -147,3 +148,7 @@ def start_to_end_date(start, end):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+    # There was a hint statinf that we will need to join station and measurement tables for some of the queries. Which ones?
+    # Fomatting for the welcome route - start and start/end routes
