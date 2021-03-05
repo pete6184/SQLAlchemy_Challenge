@@ -1,5 +1,5 @@
 # Import dependencies
-import numpy as nu
+import numpy as np
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -98,22 +98,46 @@ def tobs():
     return jsonify(tobs_list)
 
 
+@app.route("/api/v1.0/<start>")
+def start_date(start):
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
+        .filter(Measurement.date >= start).group_by(Measurement.date).all()
+    
+    session.close()
+
+    tobs_start_list = []
+    for min, avg, max in results:
+        tobs_start_dict = {}
+        tobs_start_dict["min"] = min
+        tobs_start_dict["avg"] = avg
+        tobs_start_dict["max"] = max
+        tobs_start_list.append(tobs_start_dict)
+
+    return jsonify(tobs_start_list)
+
+
 @app.route("/api/v1.0/<start>/<end>")
-def start_to_end_date(start_to_end):
+def start_to_end_date(start, end):
 # Create our session (link) from Python to the DB
     session = Session(engine)
 
     results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs))\
-        .filter(Measurement.date >= start_to_end).all()
+        .filter(Measurement.date >= start).group_by(Measurement.date).all()
     
     session.close()
 
-# /api/v1.0/<start> and /api/v1.0/<start>/<end>
-# Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
-# When given the start only, calculate TMIN, TAVG, and TMAX for all dates greater than and equal to the start date.
-# When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive.
+    tobs_start_end_list = []
+    for min, avg, max in results:
+        tobs_start_end_dict = {}
+        tobs_start_end_dict["min"] = min
+        tobs_start_end_dict["avg"] = avg
+        tobs_start_end_dict["max"] = max
+        tobs_start_end_list.append(tobs_start_end_dict)
 
-
+    return jsonify(tobs_start_end_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
