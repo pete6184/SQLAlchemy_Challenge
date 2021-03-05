@@ -26,13 +26,13 @@ app = Flask(__name__)
 @app.route("/")
 def welcome():
     """List all available api routes."""
-    return(
+    return (
         f"Available Routes:<br/>"
-        f"api/v1.0/precipitation<br/>"
-        f"api/v1.0/stations<br/>"
-        f"api/v1.0/tobs<br/>"
-        f"api/v1.0/(yyyy-mm-dd)<br/>"
-        f"api/v1.0/(yyyy-mm-dd)/(yyyy-mm-dd)"
+        f"<a href='/api/v1.0/precipitation'>Precipitation</a><br/>"
+        f"<a href='/api/v1.0/stations'>Stations</a><br/>"
+        f"<a href='/api/v1.0/tobs'>TOBS</a><br/>"
+        f"<a href='/api/v1.0/(start:yyyy-mm-dd)'StartDate</a><br/>"
+        f"<a href='/api/v1.0/(start:yyyy-mm-dd)/(end:yyyy-mm-dd)'>StartToEndDate</a>"
     )
 
 @app.route("/api/v1.0/precipitation")
@@ -81,7 +81,7 @@ def tobs():
     session = Session(engine)
 
     results = session.query(Measurement.date, Measurement.tobs)\
-        .filter(Station.station == 'USC00519281')\
+        .filter(Station.station == "USC00519281")\
         .filter(Measurement.date >= '2016-08-24')\
         .order_by(Measurement.date).all()
 
