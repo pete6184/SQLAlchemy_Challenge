@@ -14,7 +14,7 @@ The following analysis was completed using SQLAlchemy ORM queries, Pandas, and M
 
 * I stated by finding the most recent date in the data set.
 
-* Using this date, I retrieved the last 12 months of precipitation data by querying the 12 preceding months of data.
+* Using this data, I retrieved the last 12 months of precipitation data by querying the 12 preceding months of data.
 
 * I then loaded the query results into a Pandas DataFrame and set the index to the date column and sorted by date.
 
