@@ -74,4 +74,4 @@ After the initial analysis was completed, I designed a Flask API based on the qu
 
   * When given the start and the end date, calculate the `TMIN`, `TAVG`, and `TMAX` for dates between the start and end date inclusive.
 
-  ** When entering dates for the final two routes (start & start/end), make sure to use the (yyyy/mm/dd) format with a "/" seperating the start and end dates **
+  ** **When entering dates for the final two routes (start & start/end), make sure to use the (yyyy/mm/dd) format with a "/" seperating the start and end dates** **
