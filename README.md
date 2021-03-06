@@ -4,9 +4,9 @@ Congratulations! You've decided to treat yourself to a long holiday vacation in 
 
 ## Step 1 - Climate Analysis and Exploration
 
-All of the following analysis was completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
+The following analysis was completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
 
-* First I used SQLAlchemy to connect to the sqlite database and reflect the tables into two classes nameed `Station` and `Measurement`.
+* First, I used SQLAlchemy to connect to the sqlite database and reflect the tables into two classes named `Station` and `Measurement`.
 
 * Then I linked Python to the database by creating an SQLAlchemy session.
 
