@@ -1,17 +1,23 @@
+# SQLAlchemy - Surfs Up!
+
+## Requirements & Summary
+This assignment was constructed in Jupyter Notebook and the following analysis was completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
+
+This challenge provided me an alternative method for creating and accessing databases. I used the information in two seperate databases to analyze precipitation data in Honolulu.
+
+## Background
 ![surfs-up.png](Images/surfsup.png)
 
 Congratulations! You've decided to treat yourself to a long holiday vacation in Honolulu, Hawaii! To help with your trip planning, you need to do some climate analysis on the area. The following outlines what you need to do.
 
 ## Step 1 - Climate Analysis and Exploration
-
-The following analysis was completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
+Use the provided starter notebook and hawaii.sqlite files to complete your climate analysis and data exploration.
 
 * First, I used SQLAlchemy to connect to the sqlite database and reflect the tables into two classes named `Station` and `Measurement`.
 
 * Then I linked Python to the database by creating an SQLAlchemy session.
 
 ### Precipitation Analysis
-
 * I stated by finding the most recent date in the data set.
 
 * Using this data, I retrieved the last 12 months of precipitation data by querying the 12 preceding months of data.
@@ -25,7 +31,6 @@ The following analysis was completed using SQLAlchemy ORM queries, Pandas, and M
 * Lastly, I used Pandas to print the summary statistics for the precipitation data.
 
 ### Station Analysis
-
 * Here I design a query to calculate the total number of stations in the dataset.
 
 * I then designed a query to find the most active station(s).
