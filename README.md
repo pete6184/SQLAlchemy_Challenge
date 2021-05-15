@@ -3,7 +3,7 @@
 ## Requirements & Summary
 This assignment was constructed in Jupyter Notebook and the following analysis was completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
 
-This challenge provided me an alternative method for creating and accessing databases. I used the information in two seperate databases to analyze precipitation data in Honolulu.
+This challenge provided an alternative method for creating and accessing databases. I used the information in two seperate databases to analyze precipitation data in Honolulu.
 
 ## Background
 ![surfs-up.png](Images/surfsup.png)
