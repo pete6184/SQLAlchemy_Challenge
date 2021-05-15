@@ -3,7 +3,7 @@
 ## Requirements & Summary
 This assignment was constructed in Jupyter Notebook and the following analysis was completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
 
-This challenge provided an alternative method for creating and accessing databases. I used the information in two seperate databases to analyze precipitation data in Honolulu.
+This challenge provided an alternative method for creating and accessing databases. I used the information in two separate databases to analyze precipitation data in Honolulu.
 
 ## Background
 ![surfs-up.png](Images/surfsup.png)
@@ -78,4 +78,4 @@ After the initial analysis was completed, I designed a Flask API based on the qu
 
   * When given the start and the end date, calculated the `TMIN`, `TAVG`, and `TMAX` for dates between the start and end date inclusive.
 
-  ** **When entering dates for the final two routes (start & start/end), make sure to use the (yyyy/mm/dd) format with a "/" seperating the start and end dates** **
+  ** **When entering dates for the final two routes (start & start/end), make sure to use the (yyyy/mm/dd) format with a "/" separating the start and end dates** **
